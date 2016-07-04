@@ -7,7 +7,11 @@
 		return line.fn.init(opt);
 	};
 	win.line = line;
+
 	line.fn = {
+		config:{
+			lines: 0
+		},
 		init: function (opt) {
 			this.opt = opt;
 			return this;
@@ -31,17 +35,20 @@
 		self_write: write,
 		center: center,
 		left: left,
+		top: top,
 		transition: transition,
 		animate: animate,
-		delay: delay
+		delay: delay,
+		count: count
 	};
 	line.fn.init.prototype = line.prototype;
 
-	//line({text:'234234'}).write();
 
 	function write (text){
 		var div = document.createElement('div');
 		div.innerHTML = text;
+
+		this.count();
 		this.animate(div);
 		document.body.appendChild(div);
 
@@ -51,9 +58,14 @@
 		this.transition(div);
 		this.center(div);
 		var scope = this;
-		delay(500, function () {
-			scope.left(div);
-		});
+
+		(function ( lines ) {
+			delay(lines * 500, function () {
+				scope.left( div );
+				scope.top( div, lines );
+			})
+		})(this.config.lines);
+
 
 	}
 
@@ -96,7 +108,13 @@
 			return true;
 		}
 	}
+	function top(div,lines){
+		console.log(lines);
+	}
 	function delay(time, cb){
 		setTimeout( cb,time);
+	}
+	function count(){
+		this.config.lines ++ ;
 	}
 })(window);
