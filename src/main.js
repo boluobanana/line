@@ -14,5 +14,8 @@ if(config instanceof  Array){
 
 }
 
+//line({text:12313} ).write();
+//line({text:'中国人'} ).write();
+line({text:'abcdde中国馆啊啊啊啊啊阿尔法we12312424'} ).write();
 
 
