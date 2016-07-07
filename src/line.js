@@ -10,7 +10,12 @@
 
 	line.fn = {
 		config:{
-			lines: 0
+			lines: 0,
+			start_fontSize: '30px',
+			end_fontSize:'14px',
+			margin:'30px',
+			padding:'0',
+			fontFamily:''
 		},
 		init: function (opt) {
 			this.opt = opt;
@@ -77,15 +82,20 @@
 		div.style.left = 0;
 		div.style.right = 0;
 		div.style.bottom = 0;
+
 		div.style.textAlign = 'center';
-		div.style.fontSize = '30px';
+		div.style.fontFamily = this.config.fontFamily;
+		div.style.fontSize = this.config.start_fontSize;
 		//div.style.width = '100%';
-		div.style.height = '50px';
+		div.style.height = this.config.start_fontSize;
 	}
 	function transition(div){
 		div.style.transition = 'all 1s';
 	}
 	function left(div){
+
+		div.style.fontSize = this.config.end_fontSize;
+		div.style.height = this.config.end_fontSize;
 		var cnFontSize = div.style.fontSize.replace(/px/,'' ),
 			enFontSize = cnFontSize / 2;
 		var cnLength = 0,enLength = 0;
@@ -109,7 +119,9 @@
 		}
 	}
 	function top(div,lines){
-		console.log(lines);
+		var t = window.innerHeight  - div.style.height.replace(/px/,'') * lines -  this.config.margin.replace(/px/, '') * lines;
+		div.style.top = - t + 'px';
+
 	}
 	function delay(time, cb){
 		setTimeout( cb,time);
